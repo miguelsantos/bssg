@@ -1,11 +1,12 @@
 class HTMLNode():
     def __init__(self, tag=None, value=None, children=None, props=None):
+        # HTML tag name string
         self.tag = tag
+        # HTML tag value string
         self.value = value
-        if not children:
-            self.children = []
-        else:
-            self.children = children
+        # HTML children list
+        self.children = children
+        # HTML props dict
         self.props = props
 
     def to_html(self):
