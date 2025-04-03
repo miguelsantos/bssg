@@ -15,7 +15,7 @@ class HTMLNode():
     def props_to_html(self):
         if not self.props:
             return ''
-        props_list = []
+        props_list = [""]
         for k in self.props:
             props_list.append(f'{k}="{self.props[k]}"')
 
