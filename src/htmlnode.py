@@ -30,7 +30,7 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         if not self.value:
-            raise ValueError("all leaf nodes must have a value")
+            raise ValueError("invalid HTML: no value")
         if not self.tag:
             return self.value
         if self.tag:
