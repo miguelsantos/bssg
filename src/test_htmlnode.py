@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_props_to_html(self):
@@ -41,6 +41,86 @@ class TestLeafNode(unittest.TestCase):
     def test_leaf_to_html_a(self):
         node = LeafNode("a", "boot.dev", {"href": "https://www.boot.dev"})
         self.assertEqual(node.to_html(), '<a href="https://www.boot.dev">boot.dev</a>')
+
+class TestParentNode(unittest.TestCase):
+    def test_to_html_with_children(self):
+        child_node = LeafNode("span", "child")
+        parent_node = ParentNode("div", [child_node])
+        self.assertEqual(parent_node.to_html(), "<div><span>child</span></div>")
+
+    def test_to_html_with_grandchildren(self):
+        grandchild_node = LeafNode("b", "grandchild")
+        child_node = ParentNode("span", [grandchild_node])
+        parent_node = ParentNode("div", [child_node])
+        self.assertEqual(
+            parent_node.to_html(),
+            "<div><span><b>grandchild</b></span></div>",
+        )
+
+    def test_create_parent_with_no_children(self):
+        with self.assertRaises(TypeError):
+            parent_node = ParentNode("a")
+        with self.assertRaisesRegex(ValueError, 'children'):
+            parent = ParentNode("div", [])
+            parent.to_html()
+
+    def test_create_parent_witout_tag(self):
+        with self.assertRaisesRegex(ValueError, 'tag'):
+            child1 = LeafNode("b", "child1")
+            child2 = LeafNode("a", "boot.dev", {"href": "https://www.boot.dev"})
+            parent = ParentNode("", [child1, child2])
+            parent.to_html()
+
+    def test_to_html_multiple_children(self):
+        child1 = LeafNode("b", "child1")
+        child2 = LeafNode("a", "boot.dev", {"href": "https://www.boot.dev"})
+        parent = ParentNode("div", [child1, child2])
+        self.assertEqual(
+            parent.to_html(),
+            '<div><b>child1</b><a href="https://www.boot.dev">boot.dev</a></div>'
+        )
+
+    def test_to_html_with_multiple_grandchildren(self):
+        grandchild1 = LeafNode("b", "grandchild1")
+        child1 = ParentNode("span", [grandchild1])
+        grandchild2 = LeafNode("a", "grandchild2.com", {"href": "https://grandchild2.com"})
+        child2 = ParentNode("span", [grandchild2])
+        parent = ParentNode("div", [child1, child2])
+        self.assertEqual(
+            parent.to_html(),
+            '<div><span><b>grandchild1</b></span><span><a href="https://grandchild2.com">grandchild2.com</a></span></div>'
+
+        )
+
+    def test_to_html_many_children(self):
+        node = ParentNode(
+            "p",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+        )
+        self.assertEqual(
+            node.to_html(),
+            "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>",
+        )
+
+    def test_headings(self):
+        node = ParentNode(
+            "h2",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+        )
+        self.assertEqual(
+            node.to_html(),
+            "<h2><b>Bold text</b>Normal text<i>italic text</i>Normal text</h2>",
+        )
 
 if __name__ == '__main__':
     unittest.main()
