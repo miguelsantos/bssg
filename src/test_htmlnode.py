@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from htmlnode import *
 
 class TestHTMLNode(unittest.TestCase):
     def test_props_to_html(self):
@@ -89,7 +89,6 @@ class TestParentNode(unittest.TestCase):
         self.assertEqual(
             parent.to_html(),
             '<div><span><b>grandchild1</b></span><span><a href="https://grandchild2.com">grandchild2.com</a></span></div>'
-
         )
 
     def test_to_html_many_children(self):
