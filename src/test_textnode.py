@@ -23,14 +23,14 @@ class TestTextNode(unittest.TestCase):
         self.assertNotEqual(link_node, link_node2)
 
     def test_not_eq_normal_bold(self):
-        node = TextNode("This is some text", TextType.NORMAL)
+        node = TextNode("This is some text", TextType.TEXT)
         node2 = TextNode("This is some text", TextType.BOLD)
         self.assertNotEqual(node, node2)
 
     def test_repr(self):
-        node = TextNode("This is a text node", TextType.NORMAL, "https://www.boot.dev")
+        node = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")
         self.assertEqual(
-            "TextNode(This is a text node, normal, https://www.boot.dev)", repr(node)
+            "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
         )
 
 if __name__ == "__main__":
