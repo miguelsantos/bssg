@@ -232,5 +232,16 @@ class TestTextToTextNodes(unittest.TestCase):
             new_nodes,
         )
 
+
+    def test_empy_text(self):
+        text = ""
+        new_nodes = text_to_textnodes(text)
+        self.assertListEqual([TextNode("", TextType.TEXT)], new_nodes)
+
+    def test_only_text(self):
+        text = "this is only text"
+        new_nodes = text_to_textnodes(text)
+        self.assertListEqual([TextNode("this is only text", TextType.TEXT)], new_nodes)
+
 if __name__ == '__main__':
     unittest.main()
