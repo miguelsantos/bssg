@@ -128,3 +128,6 @@ def text_to_textnodes(text):
     split_link = split_nodes_link(split_image)
 
     return split_link
+
+def markdown_to_blocks(markdown):
+    return list(map(lambda x: x.strip("\n"), markdown.split("\n\n")))
