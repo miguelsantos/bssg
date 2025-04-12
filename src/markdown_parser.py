@@ -1,4 +1,6 @@
 import re
+from enum import Enum
+
 from textnode import TextNode, TextType
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -131,3 +133,12 @@ def text_to_textnodes(text):
 
 def markdown_to_blocks(markdown):
     return list(map(lambda x: x.strip("\n"), markdown.split("\n\n")))
+
+class BlockType(Enum):
+    PARAGRAPH = "paragraph"
+    HEADING = "heading"
+    CODE = "code"
+    QUOTE = "quote"
+    UNORDERED_LIST = "unordered"
+    ORDERED_LIST = "ordered"
+
