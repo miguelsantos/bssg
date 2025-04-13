@@ -267,7 +267,28 @@ This is the same paragraph on a new line
     def test_empty_text(self):
         md = """"""
         blocks = markdown_to_blocks(md)
-        self.assertEqual([""], blocks)
+        self.assertEqual([], blocks)
+
+    def test_excessive_newlines(self):
+        md = """
+This is **bolded** paragraph
+
+Another **bolded** paragraph
+
+
+Paragraph after 2 newlines
+
+
+
+Paragraph after 3 newlines
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual([
+            "This is **bolded** paragraph",
+            "Another **bolded** paragraph",
+            "Paragraph after 2 newlines",
+            "Paragraph after 3 newlines",
+        ], blocks)
 
 class TestBlockToBlockType(unittest.TestCase):
     def test_heading(self):

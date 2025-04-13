@@ -132,7 +132,7 @@ def text_to_textnodes(text):
     return split_link
 
 def markdown_to_blocks(markdown):
-    return list(map(lambda x: x.strip("\n"), markdown.split("\n\n")))
+    return list(filter(lambda b: b != '', map(lambda x: x.strip("\n"), markdown.split("\n\n"))))
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
