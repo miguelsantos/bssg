@@ -139,8 +139,8 @@ class BlockType(Enum):
     HEADING = "heading"
     CODE = "code"
     QUOTE = "quote"
-    UNORDERED_LIST = "unordered"
-    ORDERED_LIST = "ordered"
+    ULIST = "unordered_list"
+    OLIST = "ordered_list"
 
 def block_to_block_type(block):
     if re.match(r"^#{1,6} .", block):
@@ -160,12 +160,12 @@ def block_to_block_type(block):
                 return BlockType.PARAGRAPH
             else:
                 continue
-        return BlockType.UNORDERED_LIST
+        return BlockType.ULIST
     if block[:3] == "1. ":
         for i, line in enumerate(block.split("\n"), start=1):
             if line[:3] != f"{i}. ":
                 return BlockType.PARAGRAPH
             else:
                 continue
-        return BlockType.ORDERED_LIST
+        return BlockType.OLIST
     return BlockType.PARAGRAPH

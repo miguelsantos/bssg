@@ -347,7 +347,7 @@ code```""",
         ]
         block_types = [block_to_block_type(block) for block in blocks]
         self.assertListEqual([
-            BlockType.UNORDERED_LIST,
+            BlockType.ULIST,
             BlockType.PARAGRAPH,
         ], block_types)
 
@@ -360,7 +360,7 @@ code```""",
         ]
         block_types = [block_to_block_type(block) for block in blocks]
         self.assertListEqual([
-            BlockType.ORDERED_LIST,
+            BlockType.OLIST,
             BlockType.PARAGRAPH,
             BlockType.PARAGRAPH,
             BlockType.PARAGRAPH,
