@@ -351,5 +351,20 @@ code```""",
             BlockType.PARAGRAPH,
         ], block_types)
 
+    def test_olist(self):
+        blocks = [
+            "1. olist line\n2. olist line\n3. olist line",
+            "1. olist line\nnormal line\n2. olist line",
+            "1. olist line\n3. out of order olist line\n2. olist line",
+            "2. start from 2 olist line\n3. olist line\n4. olist line",
+        ]
+        block_types = [block_to_block_type(block) for block in blocks]
+        self.assertListEqual([
+            BlockType.ORDERED_LIST,
+            BlockType.PARAGRAPH,
+            BlockType.PARAGRAPH,
+            BlockType.PARAGRAPH,
+        ], block_types)
+
 if __name__ == '__main__':
     unittest.main()
