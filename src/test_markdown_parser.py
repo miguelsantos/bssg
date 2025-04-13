@@ -329,5 +329,27 @@ code```""",
             BlockType.CODE,
             ], block_types)
 
+    def test_quote(self):
+        blocks = [
+            ">quoted line 1\n> quoted line 2\n>quoted line 3",
+            ">quoted line 1\nnon quoted line\n>quoted line 2",
+        ]
+        block_types = [block_to_block_type(block) for block in blocks]
+        self.assertListEqual([
+            BlockType.QUOTE,
+            BlockType.PARAGRAPH,
+        ], block_types)
+
+    def test_ulist(self):
+        blocks = [
+            "- ulist line 1\n- ulist line 2\n- ulist line 3",
+            "- ulist line 1\nnormal line\n- ulist line 2",
+        ]
+        block_types = [block_to_block_type(block) for block in blocks]
+        self.assertListEqual([
+            BlockType.UNORDERED_LIST,
+            BlockType.PARAGRAPH,
+        ], block_types)
+
 if __name__ == '__main__':
     unittest.main()

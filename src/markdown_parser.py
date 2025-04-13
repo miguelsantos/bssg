@@ -143,9 +143,23 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered"
 
 def block_to_block_type(block):
-    if re.match("^#{1,6} .", block):
+    if re.match(r"^#{1,6} .", block):
         return BlockType.HEADING
     elif block[:3] == "```" and block[-3:] == "```":
         return BlockType.CODE
+    elif block[0] == ">":
+        for line in block.split("\n"):
+            if line[0] != ">":
+                return BlockType.PARAGRAPH
+            else:
+                continue
+        return BlockType.QUOTE
+    elif block[0:2] == "- ":
+        for line in block.split("\n"):
+            if line[0:2] != "- ":
+                return BlockType.PARAGRAPH
+            else:
+                continue
+        return BlockType.UNORDERED_LIST
     else:
         return BlockType.PARAGRAPH
