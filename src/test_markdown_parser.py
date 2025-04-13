@@ -269,6 +269,44 @@ This is the same paragraph on a new line
         blocks = markdown_to_blocks(md)
         self.assertEqual([""], blocks)
 
+class TestBlockToBlockType(unittest.TestCase):
+    def test_heading(self):
+        blocks = [
+            "# h1",
+            "## h2",
+            "### h3",
+            "#### h4",
+            "##### h5",
+            "###### h6",
+        ]
+        block_types = [block_to_block_type(block) for block in blocks]
+        self.assertListEqual([
+            BlockType.HEADING,
+            BlockType.HEADING,
+            BlockType.HEADING,
+            BlockType.HEADING,
+            BlockType.HEADING,
+            BlockType.HEADING,
+        ], block_types)
+
+    def test_code(self):
+        blocks = [
+            """```
+code
+```""",
+"""```code```""",
+"""```code
+```""",
+"""```
+code```""",
+        ]
+        block_types = [block_to_block_type(block) for block in blocks]
+        self.assertListEqual([
+            BlockType.CODE,
+            BlockType.CODE,
+            BlockType.CODE,
+            BlockType.CODE,
+            ], block_types)
 
 if __name__ == '__main__':
     unittest.main()

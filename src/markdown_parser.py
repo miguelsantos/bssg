@@ -142,3 +142,10 @@ class BlockType(Enum):
     UNORDERED_LIST = "unordered"
     ORDERED_LIST = "ordered"
 
+def block_to_block_type(block):
+    if re.match("^#{1,6} .", block):
+        return BlockType.HEADING
+    elif block[:3] == "```" and block[-3:] == "```":
+        return BlockType.CODE
+    else:
+        return BlockType.PARAGRAPH
