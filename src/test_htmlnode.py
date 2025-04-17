@@ -61,14 +61,14 @@ class TestParentNode(unittest.TestCase):
         with self.assertRaises(TypeError):
             parent_node = ParentNode("a")
         with self.assertRaisesRegex(ValueError, 'children'):
-            parent = ParentNode("div", [])
+            parent = ParentNode("div", None)
             parent.to_html()
 
     def test_create_parent_witout_tag(self):
         with self.assertRaisesRegex(ValueError, 'tag'):
             child1 = LeafNode("b", "child1")
             child2 = LeafNode("a", "boot.dev", {"href": "https://www.boot.dev"})
-            parent = ParentNode("", [child1, child2])
+            parent = ParentNode(None, [child1, child2])
             parent.to_html()
 
     def test_to_html_multiple_children(self):
