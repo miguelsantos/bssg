@@ -151,21 +151,15 @@ def block_to_block_type(block):
         for line in block.split("\n"):
             if line[0] != ">":
                 return BlockType.PARAGRAPH
-            else:
-                continue
         return BlockType.QUOTE
     if block[:2] == "- ":
         for line in block.split("\n"):
             if line[:2] != "- ":
                 return BlockType.PARAGRAPH
-            else:
-                continue
         return BlockType.ULIST
     if block[:3] == "1. ":
         for i, line in enumerate(block.split("\n"), start=1):
             if line[:3] != f"{i}. ":
                 return BlockType.PARAGRAPH
-            else:
-                continue
         return BlockType.OLIST
     return BlockType.PARAGRAPH
