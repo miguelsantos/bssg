@@ -5,12 +5,11 @@ from markdown_parser import BlockType, text_to_textnodes, markdown_to_blocks, bl
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
-    print(blocks)
     nodes = ParentNode("div", [])
     for block in blocks:
         match block_to_block_type(block):
             case BlockType.CODE:
-                print(block.strip("```"))
+                nodes.children.append(code_to_html_node(block))
             case BlockType.PARAGRAPH:
                 pass
             case BlockType.HEADING:
@@ -22,3 +21,11 @@ def markdown_to_html_node(markdown):
             case BlockType.OLIST:
                 pass
     return nodes
+
+def code_to_html_node(markdown):
+    text = markdown[4:-3] if markdown[3] == "\n" else markdown[3:-3]
+    text_node = TextNode(text, TextType.TEXT)
+    return ParentNode("pre",
+                      [ParentNode("code",
+                        [text_node_to_html_node(text_node)])])
+
