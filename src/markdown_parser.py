@@ -74,8 +74,6 @@ def split_nodes_image(old_nodes):
                 else:
                     # more than 1 match, set original_text as section after current match
                     original_text = sections[1]
-                # # set original_text as the section after the current match
-                # original_text = sections[1]
         new_nodes.extend(intermediate_nodes)
 
     return new_nodes
